@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sapt"
+version = "0.1.0"
+description = "Semi-Automated Pentest Tool — CLI-based security testing framework"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+
+dependencies = [
+    "click>=8.1.0",
+    "pydantic>=2.0.0",
+    "pyyaml>=6.0",
+    "rich>=13.0.0",
+    "aiohttp>=3.9.0",
+    "jinja2>=3.1.0",
+    "aiosqlite>=0.19.0",
+    "requests>=2.31.0",
+    "python-dotenv>=1.0.0",
+    "tenacity>=8.2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-mock>=3.11.0",
+]
+
+[project.scripts]
+sapt = "sapt.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["sapt*"]

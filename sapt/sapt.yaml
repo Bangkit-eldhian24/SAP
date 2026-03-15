@@ -1,0 +1,97 @@
+# ═══════════════════════════════════════════════════════════════════════════
+# SAPT — Semi-Automated Pentest Tool Configuration
+# ═══════════════════════════════════════════════════════════════════════════
+version: "1.0"
+
+target:
+  domain: ""                            # Override with --target flag
+  scope_file: null                      # Path to scope.txt
+  exclude_file: null                    # Path to exclude.txt
+  profile: "generic_web"                # ecommerce | fintech | api_only | cms | generic_web
+
+mode:
+  default: "bb"                         # bb | stealth | mass
+  time_limit: 180                       # minutes, 0 = unlimited
+
+tools:
+  # Auto-detected from PATH — override here if needed
+  subfinder: null
+  httpx: null
+  nuclei: null
+  naabu: null
+  ffuf: null
+  katana: null
+  dnsx: null
+  arjun: null
+  sqlmap: null
+
+recon:
+  subdomain:
+    enabled: true
+    tools: ["subfinder", "assetfinder"]
+    dns_brute: false
+    wordlist: null                      # uses built-in if null
+  http_probe:
+    enabled: true
+    timeout: 10
+    threads: 50
+    follow_redirects: true
+  tech_detection:
+    enabled: true
+    cve_lookup: true
+    nvd_api_key: null                   # optional, increases rate limit
+  js_analysis:
+    enabled: true
+    deobfuscate: true
+    extract_endpoints: true
+    extract_secrets: true
+
+scanning:
+  nuclei:
+    enabled: true
+    severity: ["critical", "high", "medium"]
+    rate_limit: 150
+    templates: null                     # null = default nuclei-templates
+    custom_templates: null
+  owasp:
+    enabled: ["A01", "A02", "A03", "A05", "A06", "A07", "A10"]
+  api_testing:
+    enabled: true
+    graphql: true
+    rest: true
+    websocket: false
+  fuzzing:
+    enabled: true
+    wordlist: null                      # null = built-in SecLists subset
+
+exploitation:
+  verify_findings: true
+  poc_generation: true
+  safe_mode: true                       # skip destructive tests
+  impact_assessment: true
+
+reporting:
+  formats: ["html", "json"]
+  executive_summary: true
+  compliance_mapping: []                # ["pci-dss", "owasp", "nist"]
+  cvss_scoring: true
+
+notify:
+  telegram:
+    enabled: false
+    bot_token: ""
+    chat_id: ""
+    notify_on: ["phase_complete", "critical_finding"]
+  slack:
+    enabled: false
+    webhook_url: ""
+
+output:
+  base_dir: "./output"
+  keep_raw: true
+  compress_old: false
+
+logging:
+  level: "info"                         # debug | info | warning | error
+  file: null                            # null = stdout only
+  save_to_file: true

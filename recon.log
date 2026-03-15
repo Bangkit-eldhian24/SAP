@@ -1,0 +1,5 @@
+[03/11/26 07:06:06] WARNING  Config file 'sapt.yaml' not found, using defaults.                                    
+Usage: sapt recon [OPTIONS]
+Try 'sapt recon --help' for help.
+
+Error: No such option: --verbose

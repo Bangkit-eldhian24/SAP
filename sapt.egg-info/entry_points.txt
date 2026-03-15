@@ -1,0 +1,2 @@
+[console_scripts]
+sapt = sapt.cli:main
